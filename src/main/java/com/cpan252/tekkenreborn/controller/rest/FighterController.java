@@ -1,17 +1,10 @@
 package com.cpan252.tekkenreborn.controller.rest;
 
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.data.domain.PageRequest;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cpan252.tekkenreborn.model.Fighter;
 import com.cpan252.tekkenreborn.model.dto.CreateFighter;
@@ -64,6 +57,32 @@ public class FighterController {
         fighterToUpdate.setDamagePerHit(fighter.getDamagePerHit());
         fighterToUpdate.setHealth(fighter.getHealth());
         fighterToUpdate.setResistance(fighter.getResistance());
+        return fighterRepository.save(fighterToUpdate);
+    }
+
+    @PatchMapping("/{id}")
+    public Fighter partialUpdateFighter(@PathVariable("id") Long id, @RequestBody Map<String, Object> updates){
+        Fighter fighterToUpdate = fighterRepository.findById(id).orElseThrow();
+
+        // Update only the fields that are present in the request
+        if(updates.containsKey("name")){
+            fighterToUpdate.setAnimeFrom(Fighter.Anime.valueOf((String) updates.get("name")));
+        }
+        if(updates.containsKey("animeFrom")){
+            fighterToUpdate.setAnimeFrom(Fighter.Anime.valueOf((String) updates.get("animeFrom")));
+        }
+        if(updates.containsKey("damagePerHit")){
+            fighterToUpdate.setAnimeFrom(Fighter.Anime.valueOf((String) updates.get("damagePerHit")));
+        }
+        if(updates.containsKey("health")){
+            fighterToUpdate.setAnimeFrom(Fighter.Anime.valueOf((String) updates.get("health")));
+        }
+        if(updates.containsKey("resistance")){
+            fighterToUpdate.setAnimeFrom(Fighter.Anime.valueOf((String) updates.get("resistance")));
+        }
+        if(updates.containsKey("url")){
+            fighterToUpdate.setAnimeFrom(Fighter.Anime.valueOf((String) updates.get("url")));
+        }
         return fighterRepository.save(fighterToUpdate);
     }
 

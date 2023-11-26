@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
 import com.cpan252.tekkenreborn.model.dto.TekkenUserDto;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
+@Slf4j
 @RequestMapping("/userdashboard")
-@CrossOrigin(origins = "http://localhost:8082")
+@CrossOrigin(origins = "http://localhost:8080")
 public class UserDashboardController {
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     public UserDashboardController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -29,9 +31,9 @@ public class UserDashboardController {
 
     @ModelAttribute("users")
     public List<TekkenUserDto> getUsers() {
-        var users = restTemplate.getForObject("http://localhost:8082/api/userdashboard", TekkenUserDto[].class);
+        var users = restTemplate.getForObject("http://localhost:8080/api/userdashboard", TekkenUserDto[].class);
+        log.info("Users: {}", users);
         return Arrays.asList(users);
-
     }
-
+ 
 }

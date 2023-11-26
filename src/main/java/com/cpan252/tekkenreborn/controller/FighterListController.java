@@ -26,7 +26,7 @@ public class FighterListController {
     private FighterRepositoryPaginated fighterRepositoryPaginated;
 
     public FighterListController(FighterRepository fighterRepository,
-            FighterRepositoryPaginated fighterRepositoryPaginated) {
+                                 FighterRepositoryPaginated fighterRepositoryPaginated) {
         this.fighterRepository = fighterRepository;
         this.fighterRepositoryPaginated = fighterRepositoryPaginated;
     }
@@ -40,7 +40,7 @@ public class FighterListController {
      * This method will allow us to populate the model with initial fighter details
      * 1. We will use the fighterRepositoryPaginated to retrieve the first page of
      * fighters (we set the page size to 5)
-     * 
+     *
      * @param model
      */
     @ModelAttribute
@@ -58,7 +58,7 @@ public class FighterListController {
 
     @PostMapping
     public String searchFightersByDate(@ModelAttribute FighterSearchByDateDto fightersByDateDto,
-            Model model) {
+                                       Model model) {
         var dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         model.addAttribute("fighters", fighterRepository.findByNameStartsWithAndCreatedAtBetween(
                 fightersByDateDto.getName(), LocalDate.parse(fightersByDateDto.getStartDate(), dateFormatter),
@@ -68,7 +68,7 @@ public class FighterListController {
 
     @GetMapping("/switchPage")
     public String switchPage(Model model,
-            @RequestParam("pageToSwitch") Optional<Integer> pageToSwitch) {
+                             @RequestParam("pageToSwitch") Optional<Integer> pageToSwitch) {
         var page = pageToSwitch.orElse(0);
         var totalPages = (int) model.getAttribute("totalPages");
         if (page < 0 || page >= totalPages) {

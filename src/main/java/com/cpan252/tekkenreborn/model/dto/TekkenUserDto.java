@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TekkenUserDto {
-    private String name;
+    private String username;
     private int wins;
     private int losses;
     private int draws;
